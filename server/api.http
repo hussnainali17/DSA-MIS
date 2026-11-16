@@ -1,0 +1,201 @@
+### DSA Server — API Examples
+### Base URL: http://localhost:5000
+
+### ── Health ──
+GET http://localhost:5000/api/health
+
+### ── Public ──
+
+### Get published events
+GET http://localhost:5000/api/public/events
+
+### Get societies
+GET http://localhost:5000/api/public/societies
+
+### Event signup
+POST http://localhost:5000/api/public/event-signups
+Content-Type: application/json
+
+{
+  "eventId": "REPLACE_WITH_EVENT_ID",
+  "name": "Ali Ahmed",
+  "regNo": "PU-2026-100",
+  "department": "Computer Science",
+  "programme": "BS",
+  "semester": 3,
+  "email": "ali@pu.edu.pk",
+  "phone": "03001234567",
+  "role": "Participant",
+  "category": "Web Design"
+}
+
+### Society application
+POST http://localhost:5000/api/public/society-applications
+Content-Type: application/json
+
+{
+  "societySlug": "media",
+  "name": "Sara Khan",
+  "regNo": "PU-2026-200",
+  "department": "Mass Communication",
+  "programme": "BS",
+  "semester": 2,
+  "email": "sara@pu.edu.pk",
+  "phone": "03009876543",
+  "applyingAs": "General member"
+}
+
+### Submit complaint
+POST http://localhost:5000/api/public/complaints
+Content-Type: application/json
+
+{
+  "name": "Test Student",
+  "regNo": "PU-2026-300",
+  "department": "English",
+  "programme": "BS",
+  "semester": 4,
+  "email": "complaint@pu.edu.pk",
+  "phone": "03111111111",
+  "category": "Other",
+  "subject": "Test complaint subject",
+  "details": "This is a detailed description of the complaint with enough characters to pass validation."
+}
+
+### Track complaint
+POST http://localhost:5000/api/public/complaints/track
+Content-Type: application/json
+
+{
+  "ref": "CMP-2026-0001",
+  "regNo": "PU-2026-300"
+}
+
+### ── Auth ──
+
+### Login
+POST http://localhost:5000/api/admin/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "REPLACE_WITH_PASSWORD"
+}
+
+### Current user (requires cookie from login)
+GET http://localhost:5000/api/admin/auth/me
+
+### Logout
+POST http://localhost:5000/api/admin/auth/logout
+
+### ── Admin: Stats ──
+GET http://localhost:5000/api/admin/stats
+
+### ── Admin: Events ──
+GET http://localhost:5000/api/admin/events
+
+### Create event
+POST http://localhost:5000/api/admin/events
+Content-Type: application/json
+
+{
+  "name": "Test Competition 2026",
+  "society": "DSA",
+  "level": "University",
+  "start": "2026-11-01",
+  "end": "2026-11-02",
+  "venue": "University of the Punjab"
+}
+
+### Update event
+PATCH http://localhost:5000/api/admin/events/REPLACE_WITH_ID
+Content-Type: application/json
+
+{
+  "venue": "New Venue"
+}
+
+### Delete event
+DELETE http://localhost:5000/api/admin/events/REPLACE_WITH_ID
+
+### ── Admin: Students ──
+GET http://localhost:5000/api/admin/students?q=&page=1&limit=50
+
+### Create student
+POST http://localhost:5000/api/admin/students
+Content-Type: application/json
+
+{
+  "name": "Sample Student",
+  "regNo": "PU-2026-999",
+  "department": "Chemistry",
+  "programme": "BS",
+  "semester": 3
+}
+
+### ── Admin: Registrations ──
+GET http://localhost:5000/api/admin/registrations?eventId=REPLACE_WITH_EVENT_ID
+
+### Create registration
+POST http://localhost:5000/api/admin/registrations
+Content-Type: application/json
+
+{
+  "eventId": "REPLACE_WITH_EVENT_ID",
+  "studentId": "REPLACE_WITH_STUDENT_ID",
+  "role": "Participant"
+}
+
+### ── Admin: Event Signups ──
+GET http://localhost:5000/api/admin/event-signups?status=Pending
+
+### Update signup status
+PATCH http://localhost:5000/api/admin/event-signups/REPLACE_WITH_ID/status
+Content-Type: application/json
+
+{
+  "status": "Approved"
+}
+
+### Approve signup (creates student + registration)
+POST http://localhost:5000/api/admin/event-signups/REPLACE_WITH_ID/approve
+
+### ── Admin: Society Applications ──
+GET http://localhost:5000/api/admin/society-applications?status=Pending
+
+### Update application status
+PATCH http://localhost:5000/api/admin/society-applications/REPLACE_WITH_ID/status
+Content-Type: application/json
+
+{
+  "status": "Approved"
+}
+
+### ── Admin: Complaints ──
+GET http://localhost:5000/api/admin/complaints?status=New
+
+### Get complaint detail
+GET http://localhost:5000/api/admin/complaints/REPLACE_WITH_ID
+
+### Respond to complaint
+PATCH http://localhost:5000/api/admin/complaints/REPLACE_WITH_ID
+Content-Type: application/json
+
+{
+  "status": "In review",
+  "response": "We are looking into this matter."
+}
+
+### ── Admin: User Management (superadmin) ──
+GET http://localhost:5000/api/admin/users
+
+### Create admin user
+POST http://localhost:5000/api/admin/users
+Content-Type: application/json
+
+{
+  "username": "staffmember",
+  "name": "Staff Member",
+  "password": "secure-pass-10",
+  "role": "admin"
+}
